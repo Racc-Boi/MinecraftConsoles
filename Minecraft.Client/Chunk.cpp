@@ -254,6 +254,14 @@ void Chunk::rebuild()
 	// (2) if any of the tiles can be quickly determined to not need rendering because they are in the middle of other tiles and
 	//     so can't be seen. A large amount (> 60% in tests) of tiles that call tesselateInWorld in the unoptimised version
 	//     of this function fall into this category. By far the largest category of these are tiles in solid regions of rock.
+	// Build a lookup table for occluder tile IDs to replace repeated 4-way comparisons with a single table lookup per neighbor, eliminating ~24 branch comparisons per interior tile.
+	bool isOccluder[256];
+	std::memset(isOccluder, 0, sizeof(isOccluder));
+	isOccluder[Tile::stone_Id] = true;
+	isOccluder[Tile::dirt_Id] = true;
+	isOccluder[Tile::unbreakable_Id] = true;
+	isOccluder[255] = true;
+
 	bool empty = true;
 	for( int yy = y0; yy < y1; yy++ )
 	{
@@ -279,17 +287,12 @@ void Chunk::rebuild()
 				if(( xx == 0 ) || ( xx == 15 )) continue;
 				if(( zz == 0 ) || ( zz == 15 )) continue;
 
-				// Establish whether this tile and its neighbours are all made of rock, dirt, unbreakable tiles, or have already
-				// been determined to meet this criteria themselves and have a tile of 255 set.
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
-				tileId = tileIds[ offset + ( ( ( xx - 1 ) << 11 ) | ( ( zz + 0 ) << 7 ) | ( indexY + 0 )) ];
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
-				tileId = tileIds[ offset + ( ( ( xx + 1 ) << 11 ) | ( ( zz + 0 ) << 7 ) | ( indexY + 0 )) ];
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
-				tileId = tileIds[ offset + ( ( ( xx + 0 ) << 11 ) | ( ( zz - 1 ) << 7 ) | ( indexY + 0 )) ];
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
-				tileId = tileIds[ offset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 1 ) << 7 ) | ( indexY + 0 )) ];
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
+				// Establish whether this tile and its neighbours are all occluders using lookup table
+				if( !isOccluder[tileId] ) continue;
+				if( !isOccluder[ tileIds[ offset + ( ( ( xx - 1 ) << 11 ) | ( ( zz + 0 ) << 7 ) | ( indexY + 0 )) ] ] ) continue;
+				if( !isOccluder[ tileIds[ offset + ( ( ( xx + 1 ) << 11 ) | ( ( zz + 0 ) << 7 ) | ( indexY + 0 )) ] ] ) continue;
+				if( !isOccluder[ tileIds[ offset + ( ( ( xx + 0 ) << 11 ) | ( ( zz - 1 ) << 7 ) | ( indexY + 0 )) ] ] ) continue;
+				if( !isOccluder[ tileIds[ offset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 1 ) << 7 ) | ( indexY + 0 )) ] ] ) continue;
 				// Treat the bottom of the world differently - we shouldn't ever be able to look up at this, so consider tiles as invisible
 				// if they are surrounded on sides other than the bottom
 				if( yy > 0 )
@@ -301,8 +304,7 @@ void Chunk::rebuild()
 						indexYMinusOne -= Level::COMPRESSED_CHUNK_SECTION_HEIGHT;
 						yMinusOneOffset = Level::COMPRESSED_CHUNK_SECTION_TILES;
 					}
-					tileId = tileIds[ yMinusOneOffset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 0 ) << 7 ) | indexYMinusOne ) ];
-					if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
+					if( !isOccluder[ tileIds[ yMinusOneOffset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 0 ) << 7 ) | indexYMinusOne ) ] ] ) continue;
 				}
 				int indexYPlusOne = yy + 1;
 				int yPlusOneOffset = 0;
@@ -311,8 +313,7 @@ void Chunk::rebuild()
 					indexYPlusOne -= Level::COMPRESSED_CHUNK_SECTION_HEIGHT;
 					yPlusOneOffset = Level::COMPRESSED_CHUNK_SECTION_TILES;
 				}
-				tileId = tileIds[ yPlusOneOffset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 0 ) << 7 ) | indexYPlusOne ) ];
-				if( !( ( tileId == Tile::stone_Id ) || ( tileId == Tile::dirt_Id ) || ( tileId == Tile::unbreakable_Id ) || ( tileId == 255) ) ) continue;
+				if( !isOccluder[ tileIds[ yPlusOneOffset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 0 ) << 7 ) | indexYPlusOne ) ] ] ) continue;
 
 				// This tile is surrounded. Flag it as not requiring to be rendered by setting its id to 255.
 				tileIds[ offset + ( ( ( xx + 0 ) << 11 ) | ( ( zz + 0 ) << 7 ) | ( indexY + 0 ) ) ] = 0xff;
@@ -375,9 +376,9 @@ void Chunk::rebuild()
 					// 4J - get tile from those copied into our local array in earlier optimisation
 					unsigned char tileId = tileIds[ offset + ( ( ( x - x0 ) << 11 ) | ( ( z - z0 ) << 7 ) | indexY) ];
 					// If flagged as not visible, drop out straight away
-					if( tileId == 0xff ) continue;
+					if( tileId == 0xff ) [[unlikely]] continue;
 //					int tileId = region->getTile(x,y,z);
-					if (tileId > 0)
+					if (tileId > 0) [[unlikely]]
 					{
 						if (!started)
 						{

@@ -805,8 +805,8 @@ int LevelRenderer::renderChunks(int from, int to, int layer, double alpha)
 	unsigned char emptyFlag = LevelRenderer::CHUNK_FLAG_EMPTY0 << layer;
 	for( int i = 0; i < chunks[playerIndex].length; i++, pClipChunk++ )
 	{
-		if( !pClipChunk->visible ) continue;													// This will be set if the chunk isn't visible, or isn't compiled, or has both empty flags set
-		if( pClipChunk->globalIdx == -1 ) continue;												// Not sure if we should ever encounter this... TODO check
+		if( !pClipChunk->visible ) [[likely]] continue;											// This will be set if the chunk isn't visible, or isn't compiled, or has both empty flags set
+		if( pClipChunk->globalIdx == -1 ) [[unlikely]] continue;								// Not sure if we should ever encounter this... TODO check
 		if( ( globalChunkFlags[pClipChunk->globalIdx] & emptyFlag ) == emptyFlag ) continue;	// Check that this particular layer isn't empty
 
 		// List can be calculated directly from the chunk's global idex
@@ -2426,18 +2426,23 @@ void LevelRenderer::setTilesDirty(int x0, int y0, int z0, int x1, int y1, int z1
 	setDirty(x0 - 1, y0 - 1, z0 - 1, x1 + 1, y1 + 1, z1 + 1, level);
 }
 
-bool inline clip(float *bb, float *frustum)
+bool inline clip(float * __restrict bb, float * __restrict frustum)
 {
+	// Pre-load AABB corners to avoid repeated memory loads
+	const float x0 = bb[0], y0 = bb[1], z0 = bb[2];
+	const float x1 = bb[3], y1 = bb[4], z1 = bb[5];
+
 	for (int i = 0; i < 6; ++i, frustum += 4)
 	{
-		if (frustum[0] * (bb[0]) + frustum[1] * (bb[1]) + frustum[2] * (bb[2]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[3]) + frustum[1] * (bb[1]) + frustum[2] * (bb[2]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[0]) + frustum[1] * (bb[4]) + frustum[2] * (bb[2]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[3]) + frustum[1] * (bb[4]) + frustum[2] * (bb[2]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[0]) + frustum[1] * (bb[1]) + frustum[2] * (bb[5]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[3]) + frustum[1] * (bb[1]) + frustum[2] * (bb[5]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[0]) + frustum[1] * (bb[4]) + frustum[2] * (bb[5]) + frustum[3] > 0) continue;
-		if (frustum[0] * (bb[3]) + frustum[1] * (bb[4]) + frustum[2] * (bb[5]) + frustum[3] > 0) continue;
+		const float a = frustum[0], b = frustum[1], c = frustum[2], d = frustum[3];
+		if (a * x0 + b * y0 + c * z0 + d > 0) continue;
+		if (a * x1 + b * y0 + c * z0 + d > 0) continue;
+		if (a * x0 + b * y1 + c * z0 + d > 0) continue;
+		if (a * x1 + b * y1 + c * z0 + d > 0) continue;
+		if (a * x0 + b * y0 + c * z1 + d > 0) continue;
+		if (a * x1 + b * y0 + c * z1 + d > 0) continue;
+		if (a * x0 + b * y1 + c * z1 + d > 0) continue;
+		if (a * x1 + b * y1 + c * z1 + d > 0) continue;
 
 		return false;
 	}
