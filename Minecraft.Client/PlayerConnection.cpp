@@ -1015,14 +1015,16 @@ void PlayerConnection::handleServerSettingsChanged(shared_ptr<ServerSettingsChan
 		if( (networkPlayer != nullptr && networkPlayer->IsHost()) || player->isModerator())
 		{
 			app.SetGameHostOption(eGameHostOption_FireSpreads, app.GetGameHostOption(packet->data,eGameHostOption_FireSpreads));
-			app.SetGameHostOption(eGameHostOption_TNT, app.GetGameHostOption(packet->data,eGameHostOption_TNT));
-			app.SetGameHostOption(eGameHostOption_MobGriefing, app.GetGameHostOption(packet->data, eGameHostOption_MobGriefing));
-			app.SetGameHostOption(eGameHostOption_KeepInventory, app.GetGameHostOption(packet->data, eGameHostOption_KeepInventory));
-			app.SetGameHostOption(eGameHostOption_DoMobSpawning, app.GetGameHostOption(packet->data, eGameHostOption_DoMobSpawning));
-			app.SetGameHostOption(eGameHostOption_DoMobLoot, app.GetGameHostOption(packet->data, eGameHostOption_DoMobLoot));
-			app.SetGameHostOption(eGameHostOption_DoTileDrops, app.GetGameHostOption(packet->data, eGameHostOption_DoTileDrops));
-			app.SetGameHostOption(eGameHostOption_DoDaylightCycle, app.GetGameHostOption(packet->data, eGameHostOption_DoDaylightCycle));
-			app.SetGameHostOption(eGameHostOption_NaturalRegeneration, app.GetGameHostOption(packet->data, eGameHostOption_NaturalRegeneration));
+				app.SetGameHostOption(eGameHostOption_TNT, app.GetGameHostOption(packet->data,eGameHostOption_TNT));
+				app.SetGameHostOption(eGameHostOption_MobGriefing, app.GetGameHostOption(packet->data, eGameHostOption_MobGriefing));
+				app.SetGameHostOption(eGameHostOption_KeepInventory, app.GetGameHostOption(packet->data, eGameHostOption_KeepInventory));
+				app.SetGameHostOption(eGameHostOption_DoMobSpawning, app.GetGameHostOption(packet->data, eGameHostOption_DoMobSpawning));
+				app.SetGameHostOption(eGameHostOption_DoMobLoot, app.GetGameHostOption(packet->data, eGameHostOption_DoMobLoot));
+				app.SetGameHostOption(eGameHostOption_DoTileDrops, app.GetGameHostOption(packet->data, eGameHostOption_DoTileDrops));
+				app.SetGameHostOption(eGameHostOption_DoDaylightCycle, app.GetGameHostOption(packet->data, eGameHostOption_DoDaylightCycle));
+				app.SetGameHostOption(eGameHostOption_NaturalRegeneration, app.GetGameHostOption(packet->data, eGameHostOption_NaturalRegeneration));
+				app.SetGameHostOption(eGameHostOption_PvP, app.GetGameHostOption(packet->data, eGameHostOption_PvP));
+				app.SetGameHostOption(eGameHostOption_TrustPlayers, app.GetGameHostOption(packet->data, eGameHostOption_TrustPlayers));
 
 			server->getPlayers()->broadcastAll(std::make_shared<ServerSettingsChangedPacket>(ServerSettingsChangedPacket::HOST_IN_GAME_SETTINGS, app.GetGameHostOption(eGameHostOption_All)));
 

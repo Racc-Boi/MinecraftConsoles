@@ -3492,6 +3492,48 @@ bool ClientConnection::isServerPacketListener()
 
 void ClientConnection::handlePlayerInfo(shared_ptr<PlayerInfoPacket> packet)
 {
+#ifdef _WINDOWS64
+	// On non-host clients, register/remove remote players in the network layer
+	// so they appear in the player list UI.
+	if (!g_NetworkManager.IsHost())
+	{
+		extern CPlatformNetworkManagerStub* g_pPlatformNetworkManager;
+		INetworkPlayer *existingPlayer = g_NetworkManager.GetPlayerBySmallId(packet->m_networkSmallId);
+
+		if (packet->m_playerColourIndex == -1 && existingPlayer != nullptr && !existingPlayer->IsLocal())
+		{
+			// Player removal: server signals that this player has left
+			IQNetPlayer *qp = static_cast<NetworkPlayerXbox *>(existingPlayer)->GetQNetPlayer();
+			g_pPlatformNetworkManager->NotifyPlayerLeaving(qp);
+			qp->m_smallId = 0;
+			qp->m_isRemote = false;
+			qp->m_isHostPlayer = false;
+			qp->m_resolvedXuid = INVALID_XUID;
+			qp->m_gamertag[0] = 0;
+			qp->SetCustomDataValue(0);
+			return;
+		}
+
+		if (packet->m_playerColourIndex >= 0 && existingPlayer == nullptr)
+		{
+			// New remote player: create an IQNet entry so the network manager tracks them
+			BYTE sid = static_cast<BYTE>(packet->m_networkSmallId);
+			IQNetPlayer *qp = &IQNet::m_player[sid];
+			Win64_SetupRemoteQNetPlayer(qp, sid, false, false);
+			if (!packet->m_playerName.empty())
+				wcsncpy_s(qp->m_gamertag, 32, packet->m_playerName.c_str(), _TRUNCATE);
+			g_pPlatformNetworkManager->NotifyPlayerJoined(qp);
+		}
+		else if (existingPlayer != nullptr && !packet->m_playerName.empty())
+		{
+			// Update gamertag for existing remote players
+			IQNetPlayer *qp = static_cast<NetworkPlayerXbox *>(existingPlayer)->GetQNetPlayer();
+			if (qp->m_isRemote && !qp->m_isHostPlayer)
+				wcsncpy_s(qp->m_gamertag, 32, packet->m_playerName.c_str(), _TRUNCATE);
+		}
+	}
+#endif
+
 	unsigned int startingPrivileges = app.GetPlayerPrivileges(packet->m_networkSmallId);
 
 	INetworkPlayer *networkPlayer = g_NetworkManager.GetPlayerBySmallId(packet->m_networkSmallId);
@@ -3525,23 +3567,6 @@ void ClientConnection::handlePlayerInfo(shared_ptr<PlayerInfoPacket> packet)
 			}
 		}
 	}
-
-	// 4J Stu - I don't think we care about this, so not converting it (came from 1.8.2)
-#if 0
-	PlayerInfo pi = playerInfoMap.get(packet.name);
-	if (pi == null && packet.add) {
-		pi = new PlayerInfo(packet.name);
-		playerInfoMap.put(packet.name, pi);
-		playerInfos.add(pi);
-	}
-	if (pi != null && !packet.add) {
-		playerInfoMap.remove(packet.name);
-		playerInfos.remove(pi);
-	}
-	if (packet.add && pi != null) {
-		pi.latency = packet.latency;
-	}
-#endif
 }
 
 

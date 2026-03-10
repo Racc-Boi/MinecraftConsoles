@@ -3,6 +3,12 @@
 #include "UILayer.h"
 #include "UIScene.h"
 
+#ifdef _DEDICATED_SERVER
+#include "UIScene_ServerDashboard.h"
+#include "UIScene_ServerConsole.h"
+#include "UIScene_ServerSettings.h"
+#endif
+
 UILayer::UILayer(UIGroup *parent)
 {
 	m_parentGroup = parent;
@@ -212,6 +218,19 @@ bool UILayer::NavigateToScene(int iPad, EUIScene scene, void *initData)
 		newScene = new UIScene_DebugCreateSchematic(iPad, initData, this);
 		break;
 #endif
+
+#ifdef _DEDICATED_SERVER
+	case eUIScene_ServerDashboard:
+		newScene = new UIScene_ServerDashboard(iPad, initData, this);
+		break;
+	case eUIScene_ServerConsole:
+		newScene = new UIScene_ServerConsole(iPad, initData, this);
+		break;
+	case eUIScene_ServerSettings:
+		newScene = new UIScene_ServerSettings(iPad, initData, this);
+		break;
+#endif
+
 	case eUIScene_DebugOptions:
 		newScene = new UIScene_DebugOptionsMenu(iPad, initData, this);
 		break;

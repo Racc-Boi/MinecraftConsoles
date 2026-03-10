@@ -28,6 +28,10 @@
 #include "..\Minecraft.World\System.h"
 #include "..\Minecraft.World\StringHelpers.h"
 #include "..\Minecraft.World\net.minecraft.world.entity.item.h"
+
+#ifdef _DEDICATED_SERVER
+#include "UIScene_ServerConsole.h"
+#endif
 #include "..\Minecraft.World\net.minecraft.world.item.h"
 #include "..\Minecraft.World\net.minecraft.world.item.enchantment.h"
 #include "..\Minecraft.World\net.minecraft.world.damagesource.h"
@@ -114,6 +118,9 @@ static void PrintConsoleLine(const wchar_t *prefix, const wstring &message)
 {
 	wprintf(L"%ls%ls\n", prefix, message.c_str());
 	fflush(stdout);
+#ifdef _DEDICATED_SERVER
+	UIScene_ServerConsole::AddLogLine(wstring(prefix) + message);
+#endif
 }
 
 static bool TryParseIntValue(const wstring &text, int &value)

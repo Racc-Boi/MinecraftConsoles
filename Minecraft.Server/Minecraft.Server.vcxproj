@@ -1,0 +1,1253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <ProjectGuid>{5F715D2E-68EE-42DD-AEF1-553A7D385C76}</ProjectGuid>
+    <RootNamespace>MinecraftServer</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\Minecraft.World\x64headers;$(ProjectDir)..\Minecraft.Client\Xbox\Sentient\Include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)x64\Debug\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)..\Minecraft.World\x64headers;$(ProjectDir)..\Minecraft.Client\Xbox\Sentient\Include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)x64\Release\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEDICATED_SERVER;_LARGE_WORLDS;_DEBUG_MENUS_ENABLED;_DEBUG;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_WINDOWS64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Minecraft.Client\Windows64\Iggy\include;..\Minecraft.Client;$(ProjectDir);$(ProjectDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;d3d11.lib;d3dcompiler.lib;XInput9_1_0.lib;wsock32.lib;..\Minecraft.World\x64_Debug\Minecraft.World.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Input_d.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Storage_d.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Render_PC_d.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggy_w64.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggyperfmon_w64.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggyexpruntime_w64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(ProjectName).pch</PrecompiledHeaderOutputFile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>MaxSpeed</Optimization>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEDICATED_SERVER;_LARGE_WORLDS;_DEBUG_MENUS_ENABLED;_CRT_NON_CONFORMING_SWPRINTFS;_CRT_SECURE_NO_WARNINGS;_WINDOWS64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Minecraft.Client\Windows64\Iggy\include;..\Minecraft.Client;$(ProjectDir);$(ProjectDir)..\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <StringPooling>true</StringPooling>
+      <AdditionalOptions>/FS /Ob3 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;d3d11.lib;d3dcompiler.lib;XInput9_1_0.lib;wsock32.lib;..\Minecraft.World\x64_Release\Minecraft.World.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Input.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Storage.lib;..\Minecraft.Client\Windows64\4JLibs\libs\4J_Render_PC.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggy_w64.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggyperfmon_w64.lib;..\Minecraft.Client\Windows64\Iggy\lib\iggyexpruntime_w64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Minecraft.Client\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="DedicatedMain.cpp" />
+    <ClCompile Include="UIScene_ServerDashboard.cpp" />
+    <ClCompile Include="UIScene_ServerConsole.cpp" />
+    <ClCompile Include="UIScene_ServerSettings.cpp" />
+    <ClCompile Include="..\include\lce_filesystem\lce_filesystem.cpp" />
+    <ClCompile Include="..\Minecraft.Client\AbstractTexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\AchievementPopup.cpp" />
+    <ClCompile Include="..\Minecraft.Client\AchievementScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\AllowAllCuller.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ArchiveFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ArrowRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BatModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BatRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BeaconRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BlazeModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BlazeRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BoatModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BoatRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BookModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BossMobGuiInfo.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BreakingItemParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BubbleParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\BufferedImage.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Button.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Camera.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CaveSpiderRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ChatScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ChestModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ChestRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ChickenModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ChickenRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Chunk.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ClientConnection.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ClientConstants.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ClockTexture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Audio\Consoles_SoundEngine.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Audio\SoundEngine.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Audio\SoundNames.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Colours\ColourTable.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Consoles_App.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCAudioFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCCapeFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCColourTableFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCGameRulesFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCGameRulesHeader.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCLocalisationFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCPack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCSkinFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCTextureFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\DLC\DLCUIDataFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\AddEnchantmentRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\AddItemRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\ApplySchematicRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\BiomeOverride.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\CollectItemRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\CompleteAllRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\CompoundGameRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\GameRule.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\GameRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\GameRuleManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\LevelGenerationOptions.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\LevelGenerators.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\LevelRules.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\LevelRuleset.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\NamedAreaRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\StartFeature.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\UpdatePlayerRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\UseTileRuleDefinition.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\ConsoleGenerateStructure.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\ConsoleSchematicFile.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionGenerateBox.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceBlock.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceContainer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceSpawner.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Leaderboards\LeaderboardInterface.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Leaderboards\LeaderboardManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Network\GameNetworkManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Network\PlatformNetworkManagerStub.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Telemetry\TelemetryManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Trial\TrialMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\AreaConstraint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\AreaHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\AreaTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\ChangeStateConstraint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\ChoiceTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\CompleteUsingItemTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\ControllerTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\CraftTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\DiggerItemHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\EffectChangedTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\FullTutorial.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\FullTutorialActiveTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\FullTutorialMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\HorseChoiceTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\InfoTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\InputConstraint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\LookAtEntityHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\LookAtTileHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\PickupTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\ProcedureCompoundTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\ProgressFlagTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\RideEntityTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\StatTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\TakeItemHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\Tutorial.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\TutorialHint.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\TutorialMessage.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\TutorialMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\TutorialTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\UseItemTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\UseTileTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Tutorial\XuiCraftingTask.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\ConsoleGameMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\Console_Utils.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_AbstractContainerMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_AnvilMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_BeaconMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_BrewingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_CommandBlockMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_ContainerMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_CraftingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_CreativeMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_DispenserMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_EnchantingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_FireworksMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_FurnaceMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_HopperMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_HorseInventoryMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_HUD.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_InventoryMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_PauseMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_StartGame.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\IUIScene_TradingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_DebugUIMarketingGuide.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_BeaconEffectButton.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_MinecraftHorse.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_BeaconMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_FireworksMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HopperMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HorseInventoryMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_Keyboard.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_MenuBackground.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_PressStartToPlay.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Base.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_BitmapIcon.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_DLCList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_DynamicLabel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_EnchantmentBook.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_EnchantmentButton.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_HTMLLabel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_LeaderboardList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_MinecraftPlayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_PlayerList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_SaveList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_SpaceIndicatorBar.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_TexturePackList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIFontData.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_AnvilMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_ControlsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_Credits.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DebugCreateSchematic.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DebugSetCamera.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DLCMainMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DLCOffersMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_EndPoem.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_EULA.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HowToPlay.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_InGameHostOptionsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_InGameInfoMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_InGamePlayerOptionsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_LanguageSelector.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_LeaderboardsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_MessageBox.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIBitmapFont.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_Chat.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_DebugUIConsole.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_Logo.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_Panorama.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_Tooltips.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIComponent_TutorialPopup.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIController.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Button.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_CheckBox.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Cursor.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Label.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_PlayerSkinPreview.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Progress.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_ButtonList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_Slider.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_SlotList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIControl_TextInput.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIGroup.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UILayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_AbstractContainerMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_BrewingStandMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_ConnectingProgress.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_ContainerMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_CraftingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_CreateWorldMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_CreativeMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DeathMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DebugOptions.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DebugOverlay.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_DispenserMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_EnchantingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_FullscreenProgress.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_FurnaceMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HelpAndOptionsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HowToPlayMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_HUD.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_Intro.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_JoinMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_LaunchMoreOptionsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_LoadMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_LoadOrJoinMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_MainMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_InventoryMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_NewUpdateMessage.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_PauseMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_QuadrantSignin.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_ReinstallMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SaveMessage.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsAudioMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsControlMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsGraphicsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsOptionsMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SettingsUIMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SignEntryMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_SkinSelectMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_TeleportMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_Timer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_TradingMenu.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIScene_TrialExitUpsell.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UIString.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\UI\UITTFFont.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\adler32.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\compress.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\crc32.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\deflate.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\gzclose.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\gzlib.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\gzread.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\gzwrite.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\infback.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\inffast.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\inflate.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\inftrees.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\trees.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\uncompr.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\Common\zlib\zutil.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\CompassTexture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\crt_compat.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Minecraft.Client\ConfirmScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ConsoleInput.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ControlsScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CowModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CowRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CreateWorldScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CreeperModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CreeperRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CritParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\CritParticle2.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Cube.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DeathScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DefaultRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DefaultTexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DemoUser.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DerivedServerLevel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DirtyChunkSorter.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DispenserBootstrap.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DistanceChunkSorter.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DLCTexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DragonBreathParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DragonModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\DripParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EchantmentTableParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EditBox.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnchantTableRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnderChestRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnderCrystalModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnderCrystalRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnderDragonRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EndermanModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EndermanRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EnderParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EntityRenderDispatcher.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EntityRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EntityTileRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\EntityTracker.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ErrorScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ExperienceOrbRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ExplodeParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Extrax64Stubs.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FallingTileRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FileTexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FireballRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FireworksParticles.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FishingHookRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FlameParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FolderTexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Font.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FootstepParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Frustum.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FrustumCuller.cpp" />
+    <ClCompile Include="..\Minecraft.Client\FrustumData.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GameRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GhastModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GhastRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GiantMobRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\glWrapper.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Gui.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GuiComponent.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GuiMessage.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GuiParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\GuiParticles.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HeartParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HorseRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HttpTexture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HugeExplosionParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HugeExplosionSeedParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HumanoidMobRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\HumanoidModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\InBedChatScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Input.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ItemFrameRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ItemInHandRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ItemRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ItemSpriteRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\JoinMultiplayerScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\KeyMapping.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LargeChestModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LavaParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LavaSlimeModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LavaSlimeRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LeashKnotModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LeashKnotRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LevelRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Lighting.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LightningBoltRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LivingEntityRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MemoryTracker.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MemTexture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MinecartModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MinecartRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MinecartSpawnerRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Minecraft.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MinecraftServer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Minimap.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MobRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MobSkinMemTextureProcessor.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MobSkinTextureProcessor.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MobSpawnerRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Model.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ModelHorse.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ModelPart.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MultiPlayerChunkCache.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MultiPlayerGameMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MultiPlayerLevel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MultiPlayerLocalPlayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\MushroomCowRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\NameEntryScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\NoteParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\OffsettedRenderList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Options.cpp" />
+    <ClCompile Include="..\Minecraft.Client\OptionsScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\OcelotModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\OcelotRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PaintingRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Particle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ParticleEngine.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PauseScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PendingConnection.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PigModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PigRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\LocalPlayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PistonPieceRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PlayerChunkMap.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PlayerCloudParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PlayerConnection.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PlayerList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PreStitchedTextureMap.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ProgressRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PS3\PS3Extras\ShutdownManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Rect2i.cpp" />
+    <ClCompile Include="..\Minecraft.Client\RemotePlayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\PlayerRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Polygon.cpp" />
+    <ClCompile Include="..\Minecraft.Client\NetherPortalParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\QuadrupedModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\RedDustParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\RenameWorldScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Screen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ScreenSizeCalculator.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ScrolledSelectionList.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SelectWorldScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerChunkCache.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerCommandDispatcher.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerConnection.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerPlayerGameMode.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerLevel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerLevelListener.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerPlayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ServerScoreboard.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Settings.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SheepFurModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SheepModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SheepRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SignModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SignRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SilverfishModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SilverfishRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SimpleIcon.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SkeletonHeadModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SkeletonModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SkeletonRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SkiModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SkullTileRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SlideButton.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SlimeModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SlimeRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SmallButton.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SmokeParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SnowManModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SnowManRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SnowShovelParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SpellParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SpiderModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SpiderRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SplashParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SquidModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SquidRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StatsCounter.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StatsScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StatsSyncher.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StitchedTexture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Stitcher.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StitchSlot.cpp" />
+    <ClCompile Include="..\Minecraft.Client\StringTable.cpp" />
+    <ClCompile Include="..\Minecraft.Client\stubs.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SuspendedParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\SuspendedTownParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TakeAnimationParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TeleportCommand.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TerrainParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Tesselator.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TexOffs.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Texture.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TextureAtlas.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TextureHolder.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TextureManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TextureMap.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TexturePack.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TexturePackRepository.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Textures.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TheEndPortalRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TileEntityRenderDispatcher.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TileEntityRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TileRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Timer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TitleScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TntMinecartRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TntRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\TrackedEntity.cpp" />
+    <ClCompile Include="..\Minecraft.Client\User.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Vertex.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VideoSettingsScreen.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ViewportCuller.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VillagerGolemModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VillagerGolemRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VillagerModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VillagerRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\VillagerZombieModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WaterDropParticle.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\Iggy\gdraw\gdraw_d3d11.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\Leaderboards\WindowsLeaderboardManager.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\Network\WinsockNetLayer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\Windows64_App.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\PostProcesser.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\KeyboardMouseInput.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Windows64\Windows64_UIController.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WitchModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WitchRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WitherBossModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WitherBossRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WitherSkullRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WolfModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WolfRenderer.cpp" />
+    <ClCompile Include="..\Minecraft.Client\WstringLookup.cpp" />
+    <ClCompile Include="..\Minecraft.Client\Xbox\Network\NetworkPlayerXbox.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ZombieModel.cpp" />
+    <ClCompile Include="..\Minecraft.Client\ZombieRenderer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\lce_filesystem\lce_filesystem.h" />
+    <ClInclude Include="..\Minecraft.Client\AbstractTexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\AchievementPopup.h" />
+    <ClInclude Include="..\Minecraft.Client\AchievementScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\AllowAllCuller.h" />
+    <ClInclude Include="..\Minecraft.Client\ArchiveFile.h" />
+    <ClInclude Include="..\Minecraft.Client\ArrowRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\BatModel.h" />
+    <ClInclude Include="..\Minecraft.Client\BatRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\BeaconRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\BlazeModel.h" />
+    <ClInclude Include="..\Minecraft.Client\BlazeRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\BoatModel.h" />
+    <ClInclude Include="..\Minecraft.Client\BoatRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\BookModel.h" />
+    <ClInclude Include="..\Minecraft.Client\BossMobGuiInfo.h" />
+    <ClInclude Include="..\Minecraft.Client\BreakingItemParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\BubbleParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\BufferedImage.h" />
+    <ClInclude Include="..\Minecraft.Client\Button.h" />
+    <ClInclude Include="..\Minecraft.Client\Camera.h" />
+    <ClInclude Include="..\Minecraft.Client\CaveSpiderRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ChatScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\ChestModel.h" />
+    <ClInclude Include="..\Minecraft.Client\ChestRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ChickenModel.h" />
+    <ClInclude Include="..\Minecraft.Client\ChickenRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Chunk.h" />
+    <ClInclude Include="..\Minecraft.Client\ClientConnection.h" />
+    <ClInclude Include="..\Minecraft.Client\ClientConstants.h" />
+    <ClInclude Include="..\Minecraft.Client\ClockTexture.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\App_Defines.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\App_enums.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\App_structs.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Audio\Consoles_SoundEngine.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Audio\miniaudio.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Audio\SoundEngine.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Audio\stb_vorbis.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\BuildVer.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Colours\ColourTable.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Consoles_App.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCAudioFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCCapeFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCColourTableFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCGameRules.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCGameRulesFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCGameRulesHeader.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCLocalisationFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCPack.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCSkinFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCTextureFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\DLC\DLCUIDataFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\AddEnchantmentRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\AddItemRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ApplySchematicRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\BiomeOverride.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\CollectItemRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\CompleteAllRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\CompoundGameRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\GameRule.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\GameRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\GameRuleManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\GameRulesInstance.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\LevelGenerationOptions.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\LevelGenerators.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\LevelRules.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\LevelRuleset.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\NamedAreaRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\StartFeature.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\UpdatePlayerRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\UseTileRuleDefinition.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ConsoleGameRules.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ConsoleGameRulesConstants.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ConsoleGenerateStructure.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ConsoleGenerateStructureAction.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\ConsoleSchematicFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionGenerateBox.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceBlock.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceContainer.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\GameRules\XboxStructureActionPlaceSpawner.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Leaderboards\LeaderboardInterface.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Leaderboards\LeaderboardManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Network\GameNetworkManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Network\NetworkPlayerInterface.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Network\PlatformNetworkManagerInterface.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Network\PlatformNetworkManagerStub.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Network\SessionInfo.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Potion_Macros.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\PostProcesser.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Telemetry\TelemetryManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Trial\TrialMode.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\AreaConstraint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\AreaHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\AreaTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\ChangeStateConstraint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\ChoiceTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\CompleteUsingItemTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\ControllerTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\CraftTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\DiggerItemHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\EffectChangedTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\FullTutorial.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\FullTutorialActiveTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\FullTutorialMode.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\HorseChoiceTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\InfoTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\InputConstraint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\LookAtEntityHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\LookAtTileHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\PickupTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\ProcedureCompoundTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\ProgressFlagTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\RideEntityTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\StateChangeTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\StatTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TakeItemHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\Tutorial.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialConstraint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialConstraints.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialEnum.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialHint.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialHints.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialMessage.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialMode.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\TutorialTasks.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\UseItemTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\UseTileTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Tutorial\XuiCraftingTask.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\ConsoleGameMode.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Console_Awards_enum.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\Console_Debug_enum.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIController.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_AbstractContainerMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_AnvilMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_BeaconMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_BrewingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_CommandBlockMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_ContainerMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_CraftingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_CreativeMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_DispenserMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_EnchantingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_FireworksMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_FurnaceMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_HopperMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_HorseInventoryMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_HUD.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_InventoryMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_PauseMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_StartGame.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\IUIScene_TradingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_DebugUIMarketingGuide.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_BeaconEffectButton.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_MinecraftHorse.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_BeaconMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_FireworksMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HopperMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HorseInventoryMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_Keyboard.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_MenuBackground.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_PressStartToPlay.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Base.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_BitmapIcon.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_DLCList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_DynamicLabel.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_EnchantmentBook.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_EnchantmentButton.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_HTMLLabel.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_LeaderboardList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_MinecraftPlayer.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_PlayerList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_SaveList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_SpaceIndicatorBar.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_TexturePackList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIFontData.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_AnvilMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_ControlsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_Credits.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DebugCreateSchematic.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DebugSetCamera.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DLCMainMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DLCOffersMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_EndPoem.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_EULA.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HowToPlay.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_InGameHostOptionsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_InGameInfoMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_InGamePlayerOptionsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_LanguageSelector.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_LeaderboardsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_MessageBox.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UI.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIBitmapFont.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_Chat.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_DebugUIConsole.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_Logo.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_Panorama.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_Tooltips.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIComponent_TutorialPopup.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIController.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Button.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_CheckBox.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Cursor.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Label.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_PlayerSkinPreview.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Progress.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_ButtonList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_Slider.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_SlotList.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIControl_TextInput.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIEnums.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIGroup.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UILayer.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_AbstractContainerMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_BrewingStandMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_ConnectingProgress.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_ContainerMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_CraftingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_CreateWorldMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_CreativeMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DeathMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DebugOptions.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DebugOverlay.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_DispenserMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_EnchantingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_FullscreenProgress.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_FurnaceMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HelpAndOptionsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HowToPlayMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_HUD.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_Intro.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_JoinMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_LaunchMoreOptionsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_LoadMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_LoadOrJoinMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_MainMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_InventoryMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_NewUpdateMessage.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_PauseMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_QuadrantSignin.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_ReinstallMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SaveMessage.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsAudioMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsControlMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsGraphicsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsOptionsMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SettingsUIMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SignEntryMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_SkinSelectMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_TeleportMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_Timer.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_TradingMenu.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIScene_TrialExitUpsell.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIString.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UIStructs.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\UI\UITTFFont.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\crc32.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\deflate.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\gzguts.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\inffast.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\inffixed.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\inflate.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\inftrees.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\trees.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\zconf.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\zlib.h" />
+    <ClInclude Include="..\Minecraft.Client\Common\zlib\zutil.h" />
+    <ClInclude Include="..\Minecraft.Client\CompassTexture.h" />
+    <ClInclude Include="..\Minecraft.Client\ConfirmScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\ConsoleInput.h" />
+    <ClInclude Include="..\Minecraft.Client\ConsoleInputSource.h" />
+    <ClInclude Include="..\Minecraft.Client\ControlsScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\CowModel.h" />
+    <ClInclude Include="..\Minecraft.Client\CowRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\CreateWorldScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\CreeperModel.h" />
+    <ClInclude Include="..\Minecraft.Client\CreeperRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\CritParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\CritParticle2.h" />
+    <ClInclude Include="..\Minecraft.Client\Cube.h" />
+    <ClInclude Include="..\Minecraft.Client\Culler.h" />
+    <ClInclude Include="..\Minecraft.Client\DeathScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\DefaultRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\DefaultTexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\DemoLevel.h" />
+    <ClInclude Include="..\Minecraft.Client\DemoUser.h" />
+    <ClInclude Include="..\Minecraft.Client\DerivedServerLevel.h" />
+    <ClInclude Include="..\Minecraft.Client\DirtyChunkSorter.h" />
+    <ClInclude Include="..\Minecraft.Client\DispenserBootstrap.h" />
+    <ClInclude Include="..\Minecraft.Client\DistanceChunkSorter.h" />
+    <ClInclude Include="..\Minecraft.Client\DLCTexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\DragonBreathParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\DragonModel.h" />
+    <ClInclude Include="..\Minecraft.Client\DripParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Achievements\AchievementManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Durango_UIController.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\gdraw\gdraw_d3d11.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\include\gdraw.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\include\iggy.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\include\iggyexpruntime.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\include\iggyperfmon.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\Iggy\include\rrCore.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\PresenceIds.h" />
+    <ClInclude Include="..\Minecraft.Client\Durango\ServiceConfig\Events-XBLA.8-149E11AEEvents.h" />
+    <ClInclude Include="..\Minecraft.Client\EchantmentTableParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\EditBox.h" />
+    <ClInclude Include="..\Minecraft.Client\EnchantTableRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EnderChestRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EnderCrystalModel.h" />
+    <ClInclude Include="..\Minecraft.Client\EnderCrystalRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EnderDragonRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EndermanModel.h" />
+    <ClInclude Include="..\Minecraft.Client\EndermanRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EnderParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\EntityRenderDispatcher.h" />
+    <ClInclude Include="..\Minecraft.Client\EntityRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EntityTileRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\EntityTracker.h" />
+    <ClInclude Include="..\Minecraft.Client\ErrorScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\ExperienceOrbRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ExplodeParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\extraX64client.h" />
+    <ClInclude Include="..\Minecraft.Client\FallingTileRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\FileTexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\FireballRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\FireworksParticles.h" />
+    <ClInclude Include="..\Minecraft.Client\FishingHookRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\FlameParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\FolderTexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\Font.h" />
+    <ClInclude Include="..\Minecraft.Client\FootstepParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\Frustum.h" />
+    <ClInclude Include="..\Minecraft.Client\FrustumCuller.h" />
+    <ClInclude Include="..\Minecraft.Client\FrustumData.h" />
+    <ClInclude Include="..\Minecraft.Client\GameRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\GhastModel.h" />
+    <ClInclude Include="..\Minecraft.Client\GhastRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\GiantMobRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Gui.h" />
+    <ClInclude Include="..\Minecraft.Client\GuiComponent.h" />
+    <ClInclude Include="..\Minecraft.Client\GuiMessage.h" />
+    <ClInclude Include="..\Minecraft.Client\GuiParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\GuiParticles.h" />
+    <ClInclude Include="..\Minecraft.Client\HeartParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\HorseRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\HttpTexture.h" />
+    <ClInclude Include="..\Minecraft.Client\HttpTextureProcessor.h" />
+    <ClInclude Include="..\Minecraft.Client\HugeExplosionParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\HugeExplosionSeedParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\HumanoidMobRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\HumanoidModel.h" />
+    <ClInclude Include="..\Minecraft.Client\InBedChatScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\Input.h" />
+    <ClInclude Include="..\Minecraft.Client\ItemFrameRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ItemInHandRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ItemRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\ItemSpriteRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\JoinMultiplayerScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\KeyMapping.h" />
+    <ClInclude Include="..\Minecraft.Client\LargeChestModel.h" />
+    <ClInclude Include="..\Minecraft.Client\LavaParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\LavaSlimeModel.h" />
+    <ClInclude Include="..\Minecraft.Client\LavaSlimeRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\LeashKnotModel.h" />
+    <ClInclude Include="..\Minecraft.Client\LeashKnotRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\LivingEntityRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\MemTexture.h" />
+    <ClInclude Include="..\Minecraft.Client\MemTextureProcessor.h" />
+    <ClInclude Include="..\Minecraft.Client\MinecartSpawnerRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\MinecraftServer.h" />
+    <ClInclude Include="..\Minecraft.Client\MobSkinMemTextureProcessor.h" />
+    <ClInclude Include="..\Minecraft.Client\ModelHorse.h" />
+    <ClInclude Include="..\Minecraft.Client\ModelPart.h" />
+    <ClInclude Include="..\Minecraft.Client\MultiPlayerChunkCache.h" />
+    <ClInclude Include="..\Minecraft.Client\MultiPlayerGameMode.h" />
+    <ClInclude Include="..\Minecraft.Client\MultiPlayerLevel.h" />
+    <ClInclude Include="..\Minecraft.Client\MultiPlayerLocalPlayer.h" />
+    <ClInclude Include="..\Minecraft.Client\MushroomCowRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Orbis\4JLibs\inc\4J_Input.h" />
+    <ClInclude Include="..\Minecraft.Client\Orbis\4JLibs\inc\4J_Profile.h" />
+    <ClInclude Include="..\Minecraft.Client\Orbis\4JLibs\inc\4J_Render.h" />
+    <ClInclude Include="..\Minecraft.Client\Orbis\4JLibs\inc\4J_Storage.h" />
+    <ClInclude Include="..\Minecraft.Client\OcelotModel.h" />
+    <ClInclude Include="..\Minecraft.Client\OcelotRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\PendingConnection.h" />
+    <ClInclude Include="..\Minecraft.Client\PistonPieceRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\PlayerCloudParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\PlayerConnection.h" />
+    <ClInclude Include="..\Minecraft.Client\PlayerList.h" />
+    <ClInclude Include="..\Minecraft.Client\PreStitchedTextureMap.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\gdraw.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\iggy.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\iggyexpruntime.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\iggyperfmon.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\iggyperfmon_ps3.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\Iggy\include\rrCore.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\PS3Extras\ShutdownManager.h" />
+    <ClInclude Include="..\Minecraft.Client\PS3\PS3Extras\winerror.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\GameConfig\Minecraft.spa.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\Miles\include\mss.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\Miles\include\rrCore.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\PSVita_App.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\Social\SocialManager.h" />
+    <ClInclude Include="..\Minecraft.Client\PSVita\XML\ATGXmlParser.h" />
+    <ClInclude Include="..\Minecraft.Client\Rect2i.h" />
+    <ClInclude Include="..\Minecraft.Client\ResourceLocation.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerCommandDispatcher.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerConnection.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerInterface.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerPlayerGameMode.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerLevelListener.h" />
+    <ClInclude Include="..\Minecraft.Client\LevelRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Lighting.h" />
+    <ClInclude Include="..\Minecraft.Client\LightningBoltRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\LocalPlayer.h" />
+    <ClInclude Include="..\Minecraft.Client\MemoryTracker.h" />
+    <ClInclude Include="..\Minecraft.Client\MinecartModel.h" />
+    <ClInclude Include="..\Minecraft.Client\MinecartRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Minecraft.h" />
+    <ClInclude Include="..\Minecraft.Client\Minimap.h" />
+    <ClInclude Include="..\Minecraft.Client\MobRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\MobSkinTextureProcessor.h" />
+    <ClInclude Include="..\Minecraft.Client\MobSpawnerRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Model.h" />
+    <ClInclude Include="..\Minecraft.Client\NameEntryScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\NoteParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\OffsettedRenderList.h" />
+    <ClInclude Include="..\Minecraft.Client\Options.h" />
+    <ClInclude Include="..\Minecraft.Client\OptionsScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\PaintingRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Particle.h" />
+    <ClInclude Include="..\Minecraft.Client\ParticleEngine.h" />
+    <ClInclude Include="..\Minecraft.Client\PauseScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\PigModel.h" />
+    <ClInclude Include="..\Minecraft.Client\PigRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\PlayerChunkMap.h" />
+    <ClInclude Include="..\Minecraft.Client\PlayerRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Polygon.h" />
+    <ClInclude Include="..\Minecraft.Client\NetherPortalParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\ProgressRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\QuadrupedModel.h" />
+    <ClInclude Include="..\Minecraft.Client\RedDustParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\RemotePlayer.h" />
+    <ClInclude Include="..\Minecraft.Client\RenameWorldScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\Screen.h" />
+    <ClInclude Include="..\Minecraft.Client\ScreenSizeCalculator.h" />
+    <ClInclude Include="..\Minecraft.Client\ScrolledSelectionList.h" />
+    <ClInclude Include="..\Minecraft.Client\SelectWorldScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerChunkCache.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerLevel.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerPlayer.h" />
+    <ClInclude Include="..\Minecraft.Client\ServerScoreboard.h" />
+    <ClInclude Include="..\Minecraft.Client\Settings.h" />
+    <ClInclude Include="..\Minecraft.Client\SheepFurModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SheepModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SheepRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SignModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SignRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SilverfishModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SilverfishRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SimpleIcon.h" />
+    <ClInclude Include="..\Minecraft.Client\SkeletonHeadModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SkeletonModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SkeletonRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SkiModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SkinBox.h" />
+    <ClInclude Include="..\Minecraft.Client\SkullTileRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SlideButton.h" />
+    <ClInclude Include="..\Minecraft.Client\SlimeModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SlimeRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SmallButton.h" />
+    <ClInclude Include="..\Minecraft.Client\SmokeParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\SnowManModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SnowManRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SnowShovelParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\SpellParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\SpiderModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SpiderRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\SplashParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\SquidModel.h" />
+    <ClInclude Include="..\Minecraft.Client\SquidRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\StatsCounter.h" />
+    <ClInclude Include="..\Minecraft.Client\StatsScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\StatsSyncher.h" />
+    <ClInclude Include="..\Minecraft.Client\stdafx.h" />
+    <ClInclude Include="..\Minecraft.Client\StitchedTexture.h" />
+    <ClInclude Include="..\Minecraft.Client\Stitcher.h" />
+    <ClInclude Include="..\Minecraft.Client\StitchSlot.h" />
+    <ClInclude Include="..\Minecraft.Client\StringTable.h" />
+    <ClInclude Include="..\Minecraft.Client\stubs.h" />
+    <ClInclude Include="..\Minecraft.Client\SuspendedParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\SuspendedTownParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\TakeAnimationParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\TeleportCommand.h" />
+    <ClInclude Include="..\Minecraft.Client\TerrainParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\Tesselator.h" />
+    <ClInclude Include="..\Minecraft.Client\TexOffs.h" />
+    <ClInclude Include="..\Minecraft.Client\Texture.h" />
+    <ClInclude Include="..\Minecraft.Client\TextureAtlas.h" />
+    <ClInclude Include="..\Minecraft.Client\TextureHolder.h" />
+    <ClInclude Include="..\Minecraft.Client\TextureManager.h" />
+    <ClInclude Include="..\Minecraft.Client\TextureMap.h" />
+    <ClInclude Include="..\Minecraft.Client\TexturePack.h" />
+    <ClInclude Include="..\Minecraft.Client\TexturePackRepository.h" />
+    <ClInclude Include="..\Minecraft.Client\Textures.h" />
+    <ClInclude Include="..\Minecraft.Client\TheEndPortalRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\TileEntityRenderDispatcher.h" />
+    <ClInclude Include="..\Minecraft.Client\TileEntityRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\TileRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\Timer.h" />
+    <ClInclude Include="..\Minecraft.Client\TitleScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\TntMinecartRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\TntRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\TrackedEntity.h" />
+    <ClInclude Include="..\Minecraft.Client\User.h" />
+    <ClInclude Include="..\Minecraft.Client\Vertex.h" />
+    <ClInclude Include="..\Minecraft.Client\VideoSettingsScreen.h" />
+    <ClInclude Include="..\Minecraft.Client\ViewportCuller.h" />
+    <ClInclude Include="..\Minecraft.Client\VillagerGolemModel.h" />
+    <ClInclude Include="..\Minecraft.Client\VillagerGolemRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\VillagerModel.h" />
+    <ClInclude Include="..\Minecraft.Client\VillagerRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\VillagerZombieModel.h" />
+    <ClInclude Include="..\Minecraft.Client\WaterDropParticle.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\4JLibs\inc\4J_Input.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\4JLibs\inc\4J_Profile.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\4JLibs\inc\4J_Render.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\4JLibs\inc\4J_Storage.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\GameConfig\Minecraft.spa.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\gdraw\gdraw_d3d11.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\include\gdraw.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\include\iggy.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\include\iggyexpruntime.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\include\iggyperfmon.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Iggy\include\rrCore.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Leaderboards\WindowsLeaderboardManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Miles\include\mss.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Miles\include\rrcore.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Minecraft_Macros.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Network\WinsockNetLayer.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Resource.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\KeyboardMouseInput.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\DynamicConfigurations.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\MinecraftTelemetry.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\SentientManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\SentientStats.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\SentientTelemetryCommon.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Sentient\TelemetryEnum.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Social\SocialManager.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Windows64_App.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\Windows64_UIController.h" />
+    <ClInclude Include="..\Minecraft.Client\Windows64\XML\ATGXmlParser.h" />
+    <ClInclude Include="..\Minecraft.Client\WitchModel.h" />
+    <ClInclude Include="..\Minecraft.Client\WitchRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\WitherBossModel.h" />
+    <ClInclude Include="..\Minecraft.Client\WitherBossRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\WitherSkullRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\WolfModel.h" />
+    <ClInclude Include="..\Minecraft.Client\WolfRenderer.h" />
+    <ClInclude Include="..\Minecraft.Client\WstringLookup.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\4JLibs\inc\4J_xtms.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Audio\SoundEngine.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Network\extra.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Network\NetworkPlayerXbox.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Resource.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientAvatar.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientBoxArt.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientConfig.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCore.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCulture.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCultureBackCompat_SenBoxArt.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCultureBackCompat_SenClientUGC.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCultureBackCompat_SenCore.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCultureBackCompat_SenNews.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientCultureBackCompat_SenSuperstars.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientDynamicConfig.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientFame.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientFile.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientHelp.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientMain.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientMarkers.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientNews.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientPackage.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientRawData.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientResource.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientStats.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientSuperstars.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientSys.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientTypes.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientUGC.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientUGCLeaderboards.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientUGCTypes.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientUser.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientUtil.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\Sentient\Include\SenClientXML.h" />
+    <ClInclude Include="..\Minecraft.Client\Xbox\targetver.h" />
+    <ClInclude Include="..\Minecraft.Client\ZombieModel.h" />
+    <ClInclude Include="..\Minecraft.Client\ZombieRenderer.h" />
+    <ClInclude Include="UIScene_ServerConsole.h" />
+    <ClInclude Include="UIScene_ServerDashboard.h" />
+    <ClInclude Include="UIScene_ServerSettings.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

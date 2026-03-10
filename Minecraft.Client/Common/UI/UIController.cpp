@@ -336,7 +336,9 @@ void UIController::postInit()
 	IggyInstallPerfmon(iggy_perfmon);
 #endif
 
+#ifndef _DEDICATED_SERVER
 	NavigateToScene(0, eUIScene_Intro);
+#endif
 }
 
 
@@ -1964,6 +1966,18 @@ bool UIController::NavigateToScene(int iPad, EUIScene scene, void *initData, EUI
 			layer = eUILayer_Scene;
 		}
 		break;
+#ifdef _DEDICATED_SERVER
+	case eUIScene_ServerDashboard:
+	case eUIScene_ServerConsole:
+	case eUIScene_ServerSettings:
+	case eUIScene_InGameHostOptionsMenu:
+	case eUIScene_InGamePlayerOptionsMenu:
+		{
+			group = eUIGroup_Fullscreen;
+			layer = eUILayer_Scene;
+		}
+		break;
+#endif
 	};
 	int menuDisplayedPad = XUSER_INDEX_ANY;
 	if(group == eUIGroup_PAD)

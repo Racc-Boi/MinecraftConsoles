@@ -462,6 +462,13 @@ void PlayerList::add(shared_ptr<ServerPlayer> player)
 	if( player->connection->getNetworkPlayer() )
 	{
 		broadcastAll(std::make_shared<PlayerInfoPacket>(player));
+
+		// Keep the server-local colour table in sync so the dedicated-server
+		// UI (and any other server-side lookup) can resolve player colours.
+		app.UpdatePlayerInfo(
+			player->connection->getNetworkPlayer()->GetSmallId(),
+			static_cast<SHORT>(player->getPlayerIndex()),
+			player->getAllPlayerGamePrivileges());
 	}
 
 	players.push_back(player);
@@ -514,6 +521,14 @@ void PlayerList::move(shared_ptr<ServerPlayer> player)
 
 void PlayerList::remove(shared_ptr<ServerPlayer> player)
 {
+	// Notify all clients that this player is leaving so non-host clients
+	// can remove the player from their network layer and player list UI.
+	if( player->connection != nullptr && player->connection->getNetworkPlayer() != nullptr )
+	{
+		broadcastAll(std::make_shared<PlayerInfoPacket>(
+			player->connection->getNetworkPlayer()->GetSmallId(), static_cast<short>(-1), 0));
+	}
+
 	save(player);
 	//4J Stu - We don't want to save the map data for guests, so when we are sure that the player is gone delete the map
 	if(player->isGuest()) playerIo->deleteMapFilesForPlayer(player);
@@ -526,12 +541,20 @@ if (player->riding != nullptr)
 	level->getTracker()->removeEntity(player);
 	level->removeEntity(player);
 	level->getChunkMap()->remove(player);
-    auto it = find(players.begin(), players.end(), player);
-    if( it != players.end() )
+	auto it = find(players.begin(), players.end(), player);
+	if( it != players.end() )
 	{
 		players.erase(it);
 	}
 	//broadcastAll(shared_ptr<PlayerInfoPacket>( new PlayerInfoPacket(player->name, false, 9999) ) );
+
+	// Clear the server-local colour mapping for the departing player.
+	if( player->connection != nullptr && player->connection->getNetworkPlayer() != nullptr )
+	{
+		app.UpdatePlayerInfo(
+			player->connection->getNetworkPlayer()->GetSmallId(),
+			-1, 0);
+	}
 
 	removePlayerFromReceiving(player);
 	player->connection = nullptr;		// Must remove reference to connection, or else there is a circular dependency
@@ -979,6 +1002,11 @@ void PlayerList::tick()
 		if( op->connection->getNetworkPlayer() )
 		{
 			broadcastAll(std::make_shared<PlayerInfoPacket>(op));
+
+			app.UpdatePlayerInfo(
+				op->connection->getNetworkPlayer()->GetSmallId(),
+				static_cast<SHORT>(op->getPlayerIndex()),
+				op->getAllPlayerGamePrivileges());
 		}
 	}
 

@@ -15,6 +15,7 @@ class PlayerInfoPacket : public Packet, public enable_shared_from_this<PlayerInf
 		short m_playerColourIndex;
 		unsigned int m_playerPrivileges;
 		int m_entityId;
+		wstring m_playerName;
 
 		PlayerInfoPacket();
 		//PlayerInfoPacket(const wstring &name, bool add, int latency);

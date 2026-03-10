@@ -139,6 +139,12 @@ enum EUIScene
 	eUIScene_DebugSetCamera,
 #endif
 
+#ifdef _DEDICATED_SERVER
+	eUIScene_ServerDashboard,
+	eUIScene_ServerConsole,
+	eUIScene_ServerSettings,
+#endif
+
 	eUIScene_COUNT,
 };
 

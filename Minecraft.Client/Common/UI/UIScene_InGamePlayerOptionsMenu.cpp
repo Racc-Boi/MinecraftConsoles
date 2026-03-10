@@ -400,9 +400,9 @@ void UIScene_InGamePlayerOptionsMenu::handleInput(int iPad, int key, bool repeat
 			if(originalPrivileges != m_playerPrivileges)
 			{
 				// Send update settings packet to server
-				Minecraft *pMinecraft = Minecraft::GetInstance();				
+				Minecraft *pMinecraft = Minecraft::GetInstance();
 				shared_ptr<MultiplayerLocalPlayer> player = pMinecraft->localplayers[m_iPad];
-				if(player->connection)
+				if(player && player->connection)
 				{
 					player->connection->send(std::make_shared<PlayerInfoPacket>(m_networkSmallId, -1, m_playerPrivileges));
 				}
@@ -452,7 +452,8 @@ int UIScene_InGamePlayerOptionsMenu::KickPlayerReturned(void *pParam,int iPad,C4
 	{		
 		Minecraft *pMinecraft = Minecraft::GetInstance();
 		shared_ptr<MultiplayerLocalPlayer> localPlayer = pMinecraft->localplayers[iPad];
-		if(localPlayer->connection)
+
+        if (localPlayer && localPlayer->connection)
 		{
 			localPlayer->connection->send(std::make_shared<KickPlayerPacket>(smallId));
 		}

@@ -188,29 +188,10 @@ void ServerConnection::handleServerSettingsChanged(shared_ptr<ServerSettingsChan
 			}
 		}
 	}
-// 	else if(packet->action==ServerSettingsChangedPacket::HOST_IN_GAME_SETTINGS)// options
-// 	{
-// 		app.SetGameHostOption(eGameHostOption_All,packet->m_serverSettings)
-// 	}
-// 	else
-// 	{
-// 		unsigned char ucData=(unsigned char)packet->data;
-// 		if(ucData&1)
-// 		{
-// 			// hide gamertags
-// 			pMinecraft->options->SetGamertagSetting(true);
-// 		}
-// 		else
-// 		{
-// 			pMinecraft->options->SetGamertagSetting(false);
-// 		}
-//
-// 		for (unsigned int i = 0; i < players.size(); i++)
-// 		{
-// 			shared_ptr<PlayerConnection> playerconnection = players[i];
-// 			playerconnection->setShowOnMaps(pMinecraft->options->GetGamertagSetting());
-// 		}
-// 	}
+	else if(packet->action==ServerSettingsChangedPacket::HOST_IN_GAME_SETTINGS)
+	{
+		app.SetGameHostOption(eGameHostOption_All, packet->data);
+	}
 }
 
 vector< shared_ptr<PlayerConnection> >  * ServerConnection::getPlayers()
