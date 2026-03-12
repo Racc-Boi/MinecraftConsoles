@@ -904,6 +904,9 @@ int CMinecraftApp::SetDefaultOptions(C_4JProfile::PROFILESETTINGS *pSettings,con
 	app.SetGameHostOption(eGameHostOption_NaturalRegeneration, 1 );
 	app.SetGameHostOption(eGameHostOption_DoDaylightCycle, 1 );
 
+	SetGameSettings(iPad, eGameSetting_FPSLimit, 60);
+	SetGameSettings(iPad,eGameSetting_VSync,1);
+
 	// 4J-PB - leave these in, or remove from everywhere they are referenced!
 	// Although probably best to leave in unless we split the profile settings into platform specific classes - having different meaning per platform for the same bitmask could get confusing
 	//#ifdef __PS3__
@@ -1304,6 +1307,8 @@ int CMinecraftApp::OldProfileVersionCallback(LPVOID pParam,unsigned char *pucDat
 			pGameSettings->uiBitmaskValues|=(GAMESETTING_UISIZE&0x00000800);				// uisize 2
 			pGameSettings->uiBitmaskValues|=(GAMESETTING_UISIZE_SPLITSCREEN&0x00004000);	// splitscreen ui size 3
 			pGameSettings->uiBitmaskValues|=GAMESETTING_ANIMATEDCHARACTER;		//eGameSetting_AnimatedCharacter - on
+			pGameSettings->uiBitmaskValues|=GAMESETTING_VSYNC;					//eGameSetting_VSync - on
+			pGameSettings->uiBitmaskValues|=GAMESETTING_FPSLIMIT;				//eGameSetting_FPSLimit - on
 			// TU12
 			// favorite skins added, but only set in TU12 - set to FFs
 			for(int i=0;i<MAX_FAVORITE_SKINS;i++)
@@ -1359,9 +1364,10 @@ void CMinecraftApp::ApplyGameSettingsChanged(int iPad)
 	ActionGameSettings(iPad,eGameSetting_UISize);
 	ActionGameSettings(iPad,eGameSetting_UISizeSplitscreen);
 	ActionGameSettings(iPad,eGameSetting_AnimatedCharacter);
+	ActionGameSettings(iPad,eGameSetting_VSync);
+	ActionGameSettings(iPad,eGameSetting_FPSLimit);
 
 	ActionGameSettings(iPad,eGameSetting_PS3_EULA_Read);
-
 }
 
 void CMinecraftApp::ActionGameSettings(int iPad,eGameSetting eVal)
@@ -1594,6 +1600,12 @@ void CMinecraftApp::ActionGameSettings(int iPad,eGameSetting eVal)
 		//nothing to do here
 		break;
 	case eGameSetting_PSVita_NetworkModeAdhoc:
+		//nothing to do here
+		break;
+	case eGameSetting_VSync:
+		//nothing to do here
+		break;
+	case eGameSetting_FPSLimit:
 		//nothing to do here
 		break;
 	}
@@ -2306,7 +2318,34 @@ void CMinecraftApp::SetGameSettings(int iPad,eGameSetting eVal,unsigned char ucV
 			GameSettingsA[iPad]->bSettingsChanged=true;
 		}
 		break;
-
+	case eGameSetting_VSync:
+		if ((GameSettingsA[iPad]->uiBitmaskValues&GAMESETTING_VSYNC)!=(ucVal&0x01)<<18)
+		{
+			if(ucVal==1)
+			{
+				GameSettingsA[iPad]->uiBitmaskValues|=GAMESETTING_VSYNC;
+			}
+			else
+			{
+				GameSettingsA[iPad]->uiBitmaskValues&=~GAMESETTING_VSYNC;
+			}
+			ActionGameSettings(iPad,eVal);
+			GameSettingsA[iPad]->bSettingsChanged=true;
+		}
+	case eGameSetting_FPSLimit:
+		if ((GameSettingsA[iPad]->uiBitmaskValues&GAMESETTING_FPSLIMIT)!=(ucVal&0x01)<<19)
+		{
+			if(ucVal==1)
+			{
+				GameSettingsA[iPad]->uiBitmaskValues|=GAMESETTING_FPSLIMIT;
+			}
+			else
+			{
+				GameSettingsA[iPad]->uiBitmaskValues&=~GAMESETTING_FPSLIMIT;
+			}
+			ActionGameSettings(iPad,eVal);
+			GameSettingsA[iPad]->bSettingsChanged=true;
+		}
 	}
 }
 
@@ -2441,7 +2480,10 @@ unsigned char CMinecraftApp::GetGameSettings(int iPad,eGameSetting eVal)
 
 	case eGameSetting_PSVita_NetworkModeAdhoc:
 		return (GameSettingsA[iPad]->uiBitmaskValues&GAMESETTING_PSVITANETWORKMODEADHOC)>>17;
-
+	case eGameSetting_VSync:
+		return (GameSettingsA[iPad]->uiBitmaskValues&GAMESETTING_VSYNC)>>18;
+	case eGameSetting_FPSLimit:
+		return (GameSettingsA[iPad]->uiBitmaskValues&GAMESETTING_FPSLIMIT)>>19;
 	}
 	return 0;
 }

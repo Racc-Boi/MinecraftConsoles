@@ -62,7 +62,7 @@ UIScene_SettingsGraphicsMenu::UIScene_SettingsGraphicsMenu(int iPad, void *initD
 	m_checkboxClouds.init(app.GetString(IDS_CHECKBOX_RENDER_CLOUDS),eControl_Clouds,(app.GetGameSettings(m_iPad,eGameSetting_Clouds)!=0));
 	m_checkboxBedrockFog.init(app.GetString(IDS_CHECKBOX_RENDER_BEDROCKFOG),eControl_BedrockFog,(app.GetGameSettings(m_iPad,eGameSetting_BedrockFog)!=0));
 	m_checkboxCustomSkinAnim.init(app.GetString(IDS_CHECKBOX_CUSTOM_SKIN_ANIM),eControl_CustomSkinAnim,(app.GetGameSettings(m_iPad,eGameSetting_CustomSkinAnim)!=0));
-	m_checkboxVSync.init(L"VSync", eControl_VSync, (app.GetGameSettings(m_iPad, eGameSetting_VSync) != 0));
+    m_checkboxVSync.init(app.GetString(IDS_CHECKBOX_VSYNC), eControl_VSync, (app.GetGameSettings(m_iPad, eGameSetting_VSync) != 0));
 
 
 	WCHAR TempString[256];
@@ -81,23 +81,25 @@ UIScene_SettingsGraphicsMenu::UIScene_SettingsGraphicsMenu(int iPad, void *initD
 	swprintf( TempString, 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_INTERFACEOPACITY ),app.GetGameSettings(m_iPad,eGameSetting_InterfaceOpacity));	
 	m_sliderInterfaceOpacity.init(TempString,eControl_InterfaceOpacity,0,100,app.GetGameSettings(m_iPad,eGameSetting_InterfaceOpacity));
 
-    // FPS limiter: slider value maps to FPS = 30 + val, final value = unlimited (store 0)
-    const int fpsMin = 0; // represents 30
-    const int fpsMax = (240 - 30) + 1; // last value = unlimited
-    int storedFps = app.GetGameSettings(m_iPad, eGameSetting_FPSLimit);
-    int fpsSliderVal = fpsMax; // default to unlimited
-    if (storedFps != 0)
+    const int fpsMinVal = 30;
+    const int fpsMaxIdx = (240 - 30) + 1;
+    const int storedFps = app.GetGameSettings(m_iPad, eGameSetting_FPSLimit);
+    
+    int currentFpsIdx = (storedFps == 0) ? fpsMaxIdx : (storedFps - fpsMinVal);
+    
+    if (currentFpsIdx < 0) currentFpsIdx = 0;
+    if (currentFpsIdx > fpsMaxIdx) currentFpsIdx = fpsMaxIdx;
+
+    if (app.GetGameSettings(m_iPad, eGameSetting_FPSLimit) == 0)
     {
-        int val = storedFps - 30;
-        if (val < 0) val = 0;
-        if (val > (fpsMax - 1)) val = fpsMax - 1;
-        fpsSliderVal = val;
+        swprintf(TempString, 256, L"%ls: Unlimited", app.GetString(IDS_MAXFPS));
     }
-    if (fpsSliderVal < fpsMin) fpsSliderVal = fpsMin;
-    if (fpsSliderVal > fpsMax) fpsSliderVal = fpsMax;
-    if (fpsSliderVal == fpsMax) swprintf(TempString, 256, L"FPS Limit: %ls", L"Unlimited");
-    else swprintf(TempString, 256, L"FPS Limit: %d", 30 + fpsSliderVal);
-    m_sliderFPSLimit.init(TempString, eControl_FPSLimit, fpsMin, fpsMax, fpsSliderVal);
+    else
+    {
+        swprintf(TempString, 256, L"%ls: %d", app.GetString(IDS_MAXFPS), app.GetGameSettings(m_iPad, eGameSetting_FPSLimit));
+    }
+
+    m_sliderFPSLimit.init(TempString, eControl_FPSLimit, 0, fpsMaxIdx, currentFpsIdx);
 
 	doHorizontalResizeCheck();
 
@@ -209,73 +211,76 @@ void UIScene_SettingsGraphicsMenu::handleSliderMove(F64 sliderId, F64 currentVal
 {
 	WCHAR TempString[256];
 	const int value = static_cast<int>(currentValue);
-	switch(static_cast<int>(sliderId))
-	{
-	case eControl_RenderDistance:
-		{
-			m_sliderRenderDistance.handleSliderMove(value);
+    switch (static_cast<int>(sliderId))
+    {
+    case eControl_RenderDistance:
+        {
+            m_sliderRenderDistance.handleSliderMove(value);
 
-			const int dist = LevelToDistance(value);
+            const int dist = LevelToDistance(value);
 
-			app.SetGameSettings(m_iPad,eGameSetting_RenderDistance,dist);
+            app.SetGameSettings(m_iPad, eGameSetting_RenderDistance, dist);
 
-			const Minecraft* mc = Minecraft::GetInstance();
-			mc->options->viewDistance = 3 - value;
-			swprintf(TempString,256,L"Render Distance: %d",dist);
-			m_sliderRenderDistance.setLabel(TempString);
-		}
-		break;
+            const Minecraft *mc = Minecraft::GetInstance();
+            mc->options->viewDistance = 3 - value;
+            swprintf(TempString, 256, L"Render Distance: %d", dist);
+            m_sliderRenderDistance.setLabel(TempString);
+        }
+        break;
 
-	case eControl_Gamma:
-		m_sliderGamma.handleSliderMove(value);
-		
-		app.SetGameSettings(m_iPad,eGameSetting_Gamma,value);
-		swprintf( TempString, 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_GAMMA ),value);
-		m_sliderGamma.setLabel(TempString);
+    case eControl_Gamma:
+        m_sliderGamma.handleSliderMove(value);
 
-		break;
+        app.SetGameSettings(m_iPad, eGameSetting_Gamma, value);
+        swprintf(TempString, 256, L"%ls: %d%%", app.GetString(IDS_SLIDER_GAMMA), value);
+        m_sliderGamma.setLabel(TempString);
 
-	case eControl_FOV:
-		{
-			m_sliderFOV.handleSliderMove(value);
-			const Minecraft* pMinecraft = Minecraft::GetInstance();
-			const int fovValue = sliderValueToFov(value);
-			pMinecraft->gameRenderer->SetFovVal(static_cast<float>(fovValue));
-			app.SetGameSettings(m_iPad, eGameSetting_FOV, value);
-			WCHAR tempString[256];
-			swprintf(tempString, 256, L"FOV: %d", fovValue);
-			m_sliderFOV.setLabel(tempString);
-		}
-		break;
+        break;
 
-	case eControl_InterfaceOpacity:
-		m_sliderInterfaceOpacity.handleSliderMove(value);
-		
-		app.SetGameSettings(m_iPad,eGameSetting_InterfaceOpacity,value);
-		swprintf( TempString, 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_INTERFACEOPACITY ),value);	
-		m_sliderInterfaceOpacity.setLabel(TempString);
+    case eControl_FOV:
+        {
+            m_sliderFOV.handleSliderMove(value);
+            const Minecraft *pMinecraft = Minecraft::GetInstance();
+            const int fovValue = sliderValueToFov(value);
+            pMinecraft->gameRenderer->SetFovVal(static_cast<float>(fovValue));
+            app.SetGameSettings(m_iPad, eGameSetting_FOV, value);
+            WCHAR tempString[256];
+            swprintf(tempString, 256, L"FOV: %d", fovValue);
+            m_sliderFOV.setLabel(tempString);
+        }
+        break;
 
-		break;
+    case eControl_InterfaceOpacity:
+        m_sliderInterfaceOpacity.handleSliderMove(value);
 
-	case eControl_FPSLimit:
-		{
-			m_sliderFPSLimit.handleSliderMove(value);
-			const int fpsMin = 30;
+        app.SetGameSettings(m_iPad, eGameSetting_InterfaceOpacity, value);
+        swprintf(TempString, 256, L"%ls: %d%%", app.GetString(IDS_SLIDER_INTERFACEOPACITY), value);
+        m_sliderInterfaceOpacity.setLabel(TempString);
+
+        break;
+
+    case eControl_FPSLimit:
+        {
+            m_sliderFPSLimit.handleSliderMove(value);
+
+            const int fpsMin = 30;
             const int fpsMaxIndex = (240 - 30) + 1;
-			if (value >= fpsMaxIndex)
-			{
-				app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, 0);
-				m_sliderFPSLimit.setLabel(L"FPS Limit: Unlimited");
-			}
-			else
-			{
-				int fps = fpsMin + value;
-				app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, fps);
-				WCHAR buf[256];
-				swprintf(buf, 256, L"FPS Limit: %d", fps);
-				m_sliderFPSLimit.setLabel(buf);
-			}
-		}
-		break;
-	}
+
+            if (value >= fpsMaxIndex)
+            {
+                app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, 0);
+                swprintf(TempString, 256, L"%ls: Unlimited", app.GetString(IDS_MAXFPS));
+                m_sliderFPSLimit.setLabel(TempString);
+            }
+            else
+            {
+                int fps = fpsMin + value;
+                app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, fps);
+
+                swprintf(TempString, 256, L"%ls: %d", app.GetString(IDS_MAXFPS), fps);
+                m_sliderFPSLimit.setLabel(TempString);
+            }
+        }
+        break;
+    }
 }

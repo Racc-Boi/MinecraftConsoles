@@ -15,15 +15,13 @@ private:
 		eControl_RenderDistance,
 		eControl_Gamma,
 		eControl_FOV,
-		eControl_InterfaceOpacity
-		,eControl_VSync
-		,eControl_FPSLimit
+		eControl_InterfaceOpacity,
+		eControl_VSync,
+		eControl_FPSLimit
 	};
 
-	UIControl_CheckBox m_checkboxClouds, m_checkboxBedrockFog, m_checkboxCustomSkinAnim; // Checkboxes
-	UIControl_CheckBox m_checkboxVSync;
-	UIControl_Slider m_sliderRenderDistance, m_sliderGamma, m_sliderFOV, m_sliderInterfaceOpacity; // Sliders
-UIControl_Slider m_sliderFPSLimit; // Slider for FPS limit
+	UIControl_CheckBox m_checkboxClouds, m_checkboxBedrockFog, m_checkboxCustomSkinAnim, m_checkboxVSync; // Checkboxes
+    UIControl_Slider m_sliderRenderDistance, m_sliderGamma, m_sliderFOV, m_sliderInterfaceOpacity, m_sliderFPSLimit; // Sliders
 	UI_BEGIN_MAP_ELEMENTS_AND_NAMES(UIScene)
 		UI_MAP_ELEMENT( m_checkboxClouds, "Clouds")
 		UI_MAP_ELEMENT( m_checkboxBedrockFog, "BedrockFog")

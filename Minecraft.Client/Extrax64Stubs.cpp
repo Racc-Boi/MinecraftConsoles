@@ -590,6 +590,8 @@ void				C_4JProfile::Initialise(DWORD dwTitleID,
 		pGameSettings->uiBitmaskValues |= (GAMESETTING_UISIZE & 0x00000800);				// uisize 2
 		pGameSettings->uiBitmaskValues |= (GAMESETTING_UISIZE_SPLITSCREEN & 0x00004000);	// splitscreen ui size 3
 		pGameSettings->uiBitmaskValues |= GAMESETTING_ANIMATEDCHARACTER;		//eGameSetting_AnimatedCharacter - on
+        pGameSettings->uiBitmaskValues |= GAMESETTING_VSYNC;                                // eGameSetting_VSync - on
+        pGameSettings->uiBitmaskValues |= GAMESETTING_FPSLIMIT;                 // eGameSetting_FPSLimit - on
 
 		// TU12
 		// favorite skins added, but only set in TU12 - set to FFs
