@@ -15,7 +15,7 @@
 #include "..\Minecraft.World\StringHelpers.h"
 
 // 4J - the Option sub-class used to be an java enumerated type, trying to emulate that functionality here
-const Options::Option Options::Option::options[17] =
+const Options::Option Options::Option::options[19] =
 {
 	Options::Option(L"options.music", true, false),
 	Options::Option(L"options.sound", true, false),
@@ -34,6 +34,8 @@ const Options::Option Options::Option::options[17] =
 	Options::Option(L"options.gamma", true, false),
 	Options::Option(L"options.renderClouds",false, true),
 	Options::Option(L"options.particles", false, false),
+    Options::Option(L"options.vsync", false, true),
+    Options::Option(L"options.maxFPS", false, false),
 };
 
 const Options::Option *Options::Option::MUSIC = &Options::Option::options[0];
@@ -53,6 +55,8 @@ const Options::Option *Options::Option::FOV = &Options::Option::options[13];
 const Options::Option *Options::Option::GAMMA = &Options::Option::options[14];
 const Options::Option *Options::Option::RENDER_CLOUDS = &Options::Option::options[15];
 const Options::Option *Options::Option::PARTICLES = &Options::Option::options[16];
+const Options::Option *Options::Option::VSYNC = &Options::Option::options[17];
+const Options::Option *Options::Option::MAXFPS = &Options::Option::options[18];
 
 
 const Options::Option *Options::Option::getItem(int id)
@@ -170,6 +174,8 @@ void Options::init()
 	particles = 0;
 	fov = 0;
 	gamma = 0;
+    vsync = true;
+    maxfps = 0;
 }
 
 Options::Options(Minecraft *minecraft, File workingDirectory)
@@ -297,6 +303,7 @@ float Options::getProgressValue(const Options::Option *item)
     if (item == Option::SOUND) return sound;
     if (item == Option::SENSITIVITY) return sensitivity;
 	if (item == Option::RENDER_DISTANCE) return viewDistance;
+    if (item == Option::MAXFPS) return maxfps;
     return 0;
 }
 
@@ -309,6 +316,7 @@ bool Options::getBooleanValue(const Options::Option *item)
 	if( item == Option::ADVANCED_OPENGL) return advancedOpengl;
 	if( item == Option::AMBIENT_OCCLUSION) return ambientOcclusion;
     if( item == Option::RENDER_CLOUDS) return renderClouds;
+	if( item == Option::VSYNC) return vsync;
 	return false;
 }
 
@@ -453,6 +461,8 @@ void Options::load()
 				if (cmds[0] == L"clouds") renderClouds = cmds[1]==L"true";
                 if (cmds[0] == L"skin") skin = cmds[1];
                 if (cmds[0] == L"lastServer") lastMpIp = cmds[1];
+                if (cmds[0] == L"vsync") vsync = cmds[1]==L"true";
+				if (cmds[0] == L"maxFPS") maxfps = _fromString<int>(cmds[1]);
 
                 for (int i = 0; i < keyMappings_length; i++)
 				{
@@ -510,6 +520,8 @@ void Options::save()
 		dos.writeChars(renderClouds ? L"clouds:true" : L"clouds:false");
         dos.writeChars(L"skin:" + skin);
         dos.writeChars(L"lastServer:" + lastMpIp);
+        dos.writeChars(L"vsync:" + wstring(vsync ? L"true" : L"false"));
+        dos.writeChars(L"maxFPS:" + std::to_wstring(maxfps));
 
         for (int i = 0; i < keyMappings_length; i++)
 		{
