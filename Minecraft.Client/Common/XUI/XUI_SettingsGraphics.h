@@ -6,17 +6,17 @@
 
 
 #define SLIDER_SETTINGS_GAMMA	0
-#define SLIDER_SETTINGS_INTERFACE_OPACITY		1
-
-
-#define SLIDER_SETTINGS_GRAPHICS_MAX				SLIDER_SETTINGS_INTERFACE_OPACITY + 1
+#define SLIDER_SETTINGS_FPS	1
+#define SLIDER_SETTINGS_INTERFACE_OPACITY		2
+#define SLIDER_SETTINGS_GRAPHICS_MAX				(SLIDER_SETTINGS_INTERFACE_OPACITY + 1)
 class CScene_SettingsGraphics : public CXuiSceneImpl
 {
 protected:
-	CXuiCtrlSliderWrapper	m_SliderA[SLIDER_SETTINGS_GRAPHICS_MAX];
+    CXuiCtrlSliderWrapper	m_SliderA[SLIDER_SETTINGS_GRAPHICS_MAX];
 	CXuiCheckbox			m_Clouds;
 	CXuiCheckbox			m_BedrockFog;
 	CXuiCheckbox			m_CustomSkinAnim;
+    CXuiCheckbox			m_VSync;
 
 	// Message map. Here we tie messages to message handlers.
 	XUI_BEGIN_MSG_MAP()
@@ -35,7 +35,9 @@ protected:
 		MAP_CONTROL(IDC_XuiClouds,						m_Clouds)
 		MAP_CONTROL(IDC_XuiBedrockFog,					m_BedrockFog)
 		MAP_CONTROL(IDC_XuiCustomSkinAnim,				m_CustomSkinAnim)
+		MAP_CONTROL(IDC_XuiVSync,						m_VSync)
 		MAP_CONTROL(IDC_XuiSliderGamma,					m_SliderA[SLIDER_SETTINGS_GAMMA])
+		MAP_CONTROL(IDC_XuiSliderFPS,					m_SliderA[SLIDER_SETTINGS_FPS])
 		MAP_CONTROL(IDC_XuiSliderInterfaceOpacity,		m_SliderA[SLIDER_SETTINGS_INTERFACE_OPACITY])
 		
 	END_CONTROL_MAP()

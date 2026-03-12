@@ -77,6 +77,8 @@
 #include "Orbis\Network\PsPlusUpsellWrapper_Orbis.h"
 #endif
 
+#include <chrono>
+
 // #define DISABLE_SPU_CODE
 // 4J Turning this on will change the graph at the bottom of the debug overlay to show the number of packets of each type added per fram
 //#define DEBUG_RENDER_SHOWS_PACKETS 1
@@ -1245,13 +1247,12 @@ void Minecraft::applyFrameMouseLook()
 
 void Minecraft::run_middle()
 {
-	static int64_t lastTime = 0;
 	static bool bFirstTimeIntoGame = true;
 	static bool bAutosaveTimerSet=false;
 	static unsigned int uiAutosaveTimer=0;
 	static int iFirstTimeCountdown=60;
-	if( lastTime == 0 ) lastTime = System::nanoTime();
-	static int frames = 0;
+    static auto last_fps_time = std::chrono::steady_clock::now();
+    static int frames = 0;
 
 	EnterCriticalSection(&m_setLevelCS);
 
@@ -2081,15 +2082,17 @@ void Minecraft::run_middle()
 			pause = app.IsAppPaused();
 
 #ifndef _CONTENT_PACKAGE
-			while (System::nanoTime() >= lastTime + 1000000000)
-			{
-				MemSect(31);
-				fpsString = std::to_wstring(frames) + L" fps (" + std::to_wstring(Chunk::updates) + L" chunk updates)";
-				MemSect(0);
-				Chunk::updates = 0;
-				lastTime += 1000000000;
-				frames = 0;
-			}
+            auto now = std::chrono::steady_clock::now();
+            if (now - last_fps_time >= std::chrono::seconds(1))
+            {
+                MemSect(31);
+                fpsString = std::to_wstring(frames) + L" fps (" + std::to_wstring(Chunk::updates) + L" chunk updates)";
+                MemSect(0);
+
+                Chunk::updates = 0;
+                frames = 0;
+                last_fps_time = now;
+            }
 #endif
 			/*
 			} catch (LevelConflictException e) {
@@ -2133,12 +2136,14 @@ void Minecraft::emergencySave()
 
 void Minecraft::renderFpsMeter(int64_t tickTime)
 {
-	int nsPer60Fps = 1000000000l / 60;
-	if (lastTimer == -1)
-	{
-		lastTimer = System::nanoTime();
-	}
-	int64_t now = System::nanoTime();
+    const int64_t nsPer60Fps = 1000000000LL / 60;
+
+    if (lastTimer == -1)
+    {
+        lastTimer = System::nanoTime();
+    }
+
+    int64_t now = System::nanoTime();
 	Minecraft::tickTimes[(Minecraft::frameTimePos) & (Minecraft::frameTimes_length - 1)] = tickTime;
 	Minecraft::frameTimes[(Minecraft::frameTimePos++) & (Minecraft::frameTimes_length - 1)] = now - lastTimer;
 	lastTimer = now;

@@ -36,6 +36,30 @@ HRESULT CScene_SettingsGraphics::OnInit( XUIMessageInit* pInitData, BOOL& bHandl
 	m_CustomSkinAnim.SetCheck( (app.GetGameSettings(m_iPad,eGameSetting_CustomSkinAnim)!=0)?TRUE:FALSE);
 	m_CustomSkinAnim.SetText(app.GetString( IDS_CHECKBOX_CUSTOM_SKIN_ANIM ));
 
+	// VSync checkbox
+	m_VSync.SetCheck((app.GetGameSettings(m_iPad, eGameSetting_VSync) != 0) ? TRUE : FALSE);
+	m_VSync.SetText(L"VSync");
+
+	// FPS limiter slider: 0..(240-30) => maps to 30..240, top value = unlimited
+	{
+		const int fpsMin = 30;
+		const int fpsMaxIndex = (240 - fpsMin) + 1; // last index is unlimited
+		int storedFps = app.GetGameSettings(m_iPad, eGameSetting_FPSLimit);
+		int sliderVal = fpsMaxIndex;
+		if (storedFps != 0)
+		{
+			int val = storedFps - fpsMin;
+			if (val < 0) val = 0;
+			if (val > (fpsMaxIndex - 1)) val = fpsMaxIndex - 1;
+			sliderVal = val;
+		}
+		m_SliderA[SLIDER_SETTINGS_FPS].SetRange(0, fpsMaxIndex);
+		m_SliderA[SLIDER_SETTINGS_FPS].SetValue(sliderVal);
+		if (sliderVal >= fpsMaxIndex) swprintf(TempString, 256, L"FPS Limit: %ls", L"Unlimited");
+		else swprintf(TempString, 256, L"FPS Limit: %d", fpsMin + sliderVal);
+		m_SliderA[SLIDER_SETTINGS_FPS].SetText(TempString);
+	}
+
 	// if we're not in the game, we need to use basescene 0 
 	if(bNotInGame)
 	{
@@ -148,6 +172,25 @@ HRESULT CScene_SettingsGraphics::OnNotifyValueChanged( HXUIOBJ hObjSource, XUINo
 		swprintf( static_cast<WCHAR *>(TempString), 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_INTERFACEOPACITY ),pNotifyValueChanged->nValue);		
 		m_SliderA[SLIDER_SETTINGS_INTERFACE_OPACITY].SetText(TempString);
 	}
+	else if(hObjSource==m_SliderA[SLIDER_SETTINGS_FPS].GetSlider() )
+	{
+		const int fpsMin = 30;
+		const int fpsMaxIndex = (240 - fpsMin) + 1;
+		int val = pNotifyValueChanged->nValue;
+		if (val >= fpsMaxIndex)
+		{
+			app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, 0);
+			m_SliderA[SLIDER_SETTINGS_FPS].SetText(L"FPS Limit: Unlimited");
+		}
+		else
+		{
+			int fps = fpsMin + val;
+			app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, fps);
+			WCHAR buf[256];
+			swprintf(buf, 256, L"FPS Limit: %d", fps);
+			m_SliderA[SLIDER_SETTINGS_FPS].SetText(buf);
+		}
+	}
 
 	return S_OK;
 }
@@ -173,6 +216,7 @@ HRESULT CScene_SettingsGraphics::OnKeyDown(XUIMessageInput* pInputData, BOOL& rf
 		app.SetGameSettings(m_iPad,eGameSetting_Clouds,m_Clouds.IsChecked()?1:0);
 		app.SetGameSettings(m_iPad,eGameSetting_BedrockFog,m_BedrockFog.IsChecked()?1:0);
 		app.SetGameSettings(m_iPad,eGameSetting_CustomSkinAnim,m_CustomSkinAnim.IsChecked()?1:0);
+		app.SetGameSettings(m_iPad,eGameSetting_VSync,m_VSync.IsChecked()?1:0);
 
 		app.NavigateBack(pInputData->UserIndex);
 		rfHandled = TRUE;

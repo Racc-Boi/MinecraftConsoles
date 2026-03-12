@@ -16,18 +16,24 @@ private:
 		eControl_Gamma,
 		eControl_FOV,
 		eControl_InterfaceOpacity
+		,eControl_VSync
+		,eControl_FPSLimit
 	};
 
 	UIControl_CheckBox m_checkboxClouds, m_checkboxBedrockFog, m_checkboxCustomSkinAnim; // Checkboxes
+	UIControl_CheckBox m_checkboxVSync;
 	UIControl_Slider m_sliderRenderDistance, m_sliderGamma, m_sliderFOV, m_sliderInterfaceOpacity; // Sliders
+UIControl_Slider m_sliderFPSLimit; // Slider for FPS limit
 	UI_BEGIN_MAP_ELEMENTS_AND_NAMES(UIScene)
 		UI_MAP_ELEMENT( m_checkboxClouds, "Clouds")
 		UI_MAP_ELEMENT( m_checkboxBedrockFog, "BedrockFog")
 		UI_MAP_ELEMENT( m_checkboxCustomSkinAnim, "CustomSkinAnim")
+		UI_MAP_ELEMENT( m_checkboxVSync, "VSync")
 		UI_MAP_ELEMENT( m_sliderRenderDistance, "RenderDistance")
 		UI_MAP_ELEMENT( m_sliderGamma, "Gamma")
 		UI_MAP_ELEMENT(m_sliderFOV, "FOV")
 		UI_MAP_ELEMENT( m_sliderInterfaceOpacity, "InterfaceOpacity")
+		UI_MAP_ELEMENT( m_sliderFPSLimit, "FPSLimit")
 	UI_END_MAP_ELEMENTS_AND_NAMES()
 
 	bool m_bNotInGame;

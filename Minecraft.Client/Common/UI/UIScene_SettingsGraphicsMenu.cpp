@@ -62,8 +62,9 @@ UIScene_SettingsGraphicsMenu::UIScene_SettingsGraphicsMenu(int iPad, void *initD
 	m_checkboxClouds.init(app.GetString(IDS_CHECKBOX_RENDER_CLOUDS),eControl_Clouds,(app.GetGameSettings(m_iPad,eGameSetting_Clouds)!=0));
 	m_checkboxBedrockFog.init(app.GetString(IDS_CHECKBOX_RENDER_BEDROCKFOG),eControl_BedrockFog,(app.GetGameSettings(m_iPad,eGameSetting_BedrockFog)!=0));
 	m_checkboxCustomSkinAnim.init(app.GetString(IDS_CHECKBOX_CUSTOM_SKIN_ANIM),eControl_CustomSkinAnim,(app.GetGameSettings(m_iPad,eGameSetting_CustomSkinAnim)!=0));
+	m_checkboxVSync.init(L"VSync", eControl_VSync, (app.GetGameSettings(m_iPad, eGameSetting_VSync) != 0));
 
-	
+
 	WCHAR TempString[256];
 
 	swprintf(TempString, 256, L"Render Distance: %d",app.GetGameSettings(m_iPad,eGameSetting_RenderDistance));	
@@ -79,6 +80,24 @@ UIScene_SettingsGraphicsMenu::UIScene_SettingsGraphicsMenu(int iPad, void *initD
 	
 	swprintf( TempString, 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_INTERFACEOPACITY ),app.GetGameSettings(m_iPad,eGameSetting_InterfaceOpacity));	
 	m_sliderInterfaceOpacity.init(TempString,eControl_InterfaceOpacity,0,100,app.GetGameSettings(m_iPad,eGameSetting_InterfaceOpacity));
+
+    // FPS limiter: slider value maps to FPS = 30 + val, final value = unlimited (store 0)
+    const int fpsMin = 0; // represents 30
+    const int fpsMax = (240 - 30) + 1; // last value = unlimited
+    int storedFps = app.GetGameSettings(m_iPad, eGameSetting_FPSLimit);
+    int fpsSliderVal = fpsMax; // default to unlimited
+    if (storedFps != 0)
+    {
+        int val = storedFps - 30;
+        if (val < 0) val = 0;
+        if (val > (fpsMax - 1)) val = fpsMax - 1;
+        fpsSliderVal = val;
+    }
+    if (fpsSliderVal < fpsMin) fpsSliderVal = fpsMin;
+    if (fpsSliderVal > fpsMax) fpsSliderVal = fpsMax;
+    if (fpsSliderVal == fpsMax) swprintf(TempString, 256, L"FPS Limit: %ls", L"Unlimited");
+    else swprintf(TempString, 256, L"FPS Limit: %d", 30 + fpsSliderVal);
+    m_sliderFPSLimit.init(TempString, eControl_FPSLimit, fpsMin, fpsMax, fpsSliderVal);
 
 	doHorizontalResizeCheck();
 
@@ -165,6 +184,7 @@ void UIScene_SettingsGraphicsMenu::handleInput(int iPad, int key, bool repeat, b
 			app.SetGameSettings(m_iPad,eGameSetting_Clouds,m_checkboxClouds.IsChecked()?1:0);
 			app.SetGameSettings(m_iPad,eGameSetting_BedrockFog,m_checkboxBedrockFog.IsChecked()?1:0);
 			app.SetGameSettings(m_iPad,eGameSetting_CustomSkinAnim,m_checkboxCustomSkinAnim.IsChecked()?1:0);
+			app.SetGameSettings(m_iPad,eGameSetting_VSync,m_checkboxVSync.IsChecked()?1:0);
 
 			navigateBack();
 			handled = true;
@@ -235,6 +255,27 @@ void UIScene_SettingsGraphicsMenu::handleSliderMove(F64 sliderId, F64 currentVal
 		swprintf( TempString, 256, L"%ls: %d%%", app.GetString( IDS_SLIDER_INTERFACEOPACITY ),value);	
 		m_sliderInterfaceOpacity.setLabel(TempString);
 
+		break;
+
+	case eControl_FPSLimit:
+		{
+			m_sliderFPSLimit.handleSliderMove(value);
+			const int fpsMin = 30;
+            const int fpsMaxIndex = (240 - 30) + 1;
+			if (value >= fpsMaxIndex)
+			{
+				app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, 0);
+				m_sliderFPSLimit.setLabel(L"FPS Limit: Unlimited");
+			}
+			else
+			{
+				int fps = fpsMin + value;
+				app.SetGameSettings(m_iPad, eGameSetting_FPSLimit, fps);
+				WCHAR buf[256];
+				swprintf(buf, 256, L"FPS Limit: %d", fps);
+				m_sliderFPSLimit.setLabel(buf);
+			}
+		}
 		break;
 	}
 }

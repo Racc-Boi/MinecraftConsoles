@@ -178,6 +178,10 @@ enum eGameSetting
 	// PSVita
 	eGameSetting_PSVita_NetworkModeAdhoc,
 
+    // Graphics additions
+    eGameSetting_VSync,
+    // Stored as 0 = unlimited, otherwise fps value (30..240)
+    eGameSetting_FPSLimit,
 
 };
 

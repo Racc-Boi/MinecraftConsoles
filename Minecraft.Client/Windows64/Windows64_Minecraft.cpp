@@ -55,6 +55,7 @@ class Renderer;
 extern Renderer InternalRenderManager;
 
 #include "Xbox/resource.h"
+#include <thread>
 
 #ifdef _MSC_VER
 #pragma comment(lib, "legacy_stdio_definitions.lib")
@@ -542,6 +543,7 @@ static bool ResizeD3D(int newW, int newH); // forward declaration
 static bool g_bInSizeMove = false;     // true while the user is dragging the window border
 static int  g_pendingResizeW = 0;      // deferred resize dimensions
 static int  g_pendingResizeH = 0;
+static int g_refreshRate = 60;		   // Monitor refresh rate detected from swapchain
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -897,6 +899,16 @@ HRESULT InitDevice()
 	}
 	if( FAILED( hr ) )
 		return hr;
+
+    // Record actual monitor refresh rate from the created swap chain
+    {
+        DXGI_SWAP_CHAIN_DESC desc = {};
+        if (SUCCEEDED(g_pSwapChain->GetDesc(&desc)))
+        {
+            if (desc.BufferDesc.RefreshRate.Denominator != 0)
+                g_refreshRate = desc.BufferDesc.RefreshRate.Numerator / desc.BufferDesc.RefreshRate.Denominator;
+        }
+    }
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = nullptr;
@@ -1762,6 +1774,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		hr = XuiTimersRun();
 	}
 #endif
+    int64_t frameStartTime = System::nanoTime();
 	MSG msg = {0};
 	while( WM_QUIT != msg.message && !app.m_bShutdown)
 	{
@@ -1959,10 +1972,32 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 		RenderManager.Set_matrixDirty();
 #endif
-		// Present the frame.
-		RenderManager.Present();
+        // Present the frame.
+        // Use swapchain present interval for real VSync toggling on Windows
+        UINT syncInterval = (app.GetGameSettings(0, eGameSetting_VSync) != 0) ? 1u : 0u;
+        if (g_pSwapChain)
+        {
+            g_pSwapChain->Present(syncInterval, 0);
+        }
+        else
+        {
+            // Fallback to RenderManager.Present() if swap chain not available as im not 100% how 4j handle this stuff
+            RenderManager.Present();
+        }
 
-		ui.CheckMenuDisplayed();
+		int fpsLimit = app.GetGameSettings(0, eGameSetting_FPSLimit);
+        if (fpsLimit > 0)
+        {
+            int64_t targeFrameTime = frameStartTime + (1000000000LL / fpsLimit);
+            while (System::nanoTime() < targeFrameTime)
+            {
+				// use yield to not trigger os sleep and lock up any other threads
+                std::this_thread::yield();
+			}
+        }
+        frameStartTime = System::nanoTime();
+
+        ui.CheckMenuDisplayed();
 
 		// Update mouse grab: grab when in-game and no menu is open
 		{
